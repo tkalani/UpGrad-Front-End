@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <title>Phone Directory</title>
+    </head>
+    <body>
+        <button onclick="addRecordFormShow()" id="add-record-form-button">Add Record</button>
+        <button onclick="addRecordFormHide()" id="hide-add-record-form-button" style="display: none;">Hide Add Form Record</button>
+        <div id="add-record-form" style="display: none;">
+            Name : <input type="text" name="record_name" id=record-name><br>
+            Phone No. : <input type="number" name="record_number" id="record-number"><br>
+            <button onclick="addRecordToDirectory()">Add Record to Dorectory</button>
+        </div>
+
+        <div id="record-list">
+            <table border=1>
+                <thead>
+                    <th>Name</th>
+                    <th>Phone Number</th>
+                </thead>
+                <tbody id="record-list-table-body">
+                </tbody>
+            </table>
+        </div>
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        record_list = [];
+        function addRecordFormShow()
+        {
+            $('#add-record-form').show();
+            $('#add-record-form-button').hide();
+            $('#hide-add-record-form-button').show();
+        }
+
+        function addRecordToDirectory()
+        {
+            var record_name = $('#record-name').val();
+            var record_number = $('#record-number').val();
+            var record = {"name": record_name, "record_number": record_number};
+            record_list.push(record);
+
+            var html = "<tr id='record" + record_list.length +"'><td>"+ record_name +"</td><td>"+ record_number +"</td><td><button onclick='deleteRecord("+ record_list.length +")'>Delete</td></tr>";
+            $('#record-list-table-body').append(html);
+
+            $('#add-record-form').hide();
+            $('#add-record-form-button').show();
+            $('#hide-add-record-form-button').hide();
+
+            $('#record-name').val(' ');
+            $('#record-number').val(' ');
+        }
+
+        function addRecordFormHide()
+        {
+            $('#add-record-form').hide();
+            $('#add-record-form-button').show();
+            $('#hide-add-record-form-button').hide();
+        }
+
+        function deleteRecord(record_id)
+        {
+            $('#record'+record_id).remove();
+        }
+    </script>
+</html>
